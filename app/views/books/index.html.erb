@@ -1,0 +1,92 @@
+<% if @book.errors.any? %>
+  <%= @book.errors.count %>errors prohibited this obj from being saved:
+  <ul>
+    <% @book.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<div class="container px-5 px-sm-0">
+  <div class="row">
+    
+    <div class="col-md-3">
+      <h1>User info</h1>
+      <div>
+        <%= image_tag @user.get_profile_image(100,100) %>
+        <table class="table">
+          <tr><th>name</th> <td><%=@user.name %></td></tr>
+          <tr><th>introduction</th> <td><%=@user.introduce %></td></tr>
+        </table>
+        <%= link_to edit_user_path(@user.id),class:"btn btn-outline-secondary w-100" do %>
+          <i class="fas fa-user-cog"></i>
+        <% end %>
+      </div>
+  
+
+
+
+       <h1>New book</h1>
+<!-- form_with部分 -->
+       <%= form_with model: @book do |f| %> <!--#controllerのindexアクションで@book=Book.new
+エラーメッセージで@bookを使いたいから-->
+       <h4>Title</h4>
+       <%= f.text_field :title %>
+	
+       <h4>Opinion</h4>
+       <%= f.text_area :body %>
+	
+       <%= f.submit 'Create Book' %>
+       <% end %>
+     </div>
+
+
+<div class="col-md-8 offset-md-1"> 
+  <h1>Books</h1>
+
+
+  
+  <table class="table table-hover table-inverse"> 
+    <thead>
+     <tr>
+       <th></th>
+       <th>Title</th>
+       <th>Opinion</th>
+       <th colspan="3"></th>
+     </tr>
+  　</thead>
+　  
+ 
+ 
+    <tbody>
+      <% @books.each do |book| %>
+      <tr>
+      <td><%= link_to book_path(book.id)  do %>
+         <%= image_tag 'no_image.jpg' %>
+        <% end %>
+      </td>
+      <td><%= link_to book_path(book.id)  do %>
+         <%= book.title %>
+        <% end %>
+      </td>
+      <td><%= book.body %></td>
+      </tr>
+     <% end %>
+    
+   </tbody>
+  </table>
+ </div>
+  
+  
+ </div>
+</div>
+
+<footer>
+  <div class="container mt-5">
+   <div class="row">
+     <div class="mx-auto">
+       <p>CopyRight Infratop.inc</p>
+     </div>
+   </div>
+  </div>
+</footer>

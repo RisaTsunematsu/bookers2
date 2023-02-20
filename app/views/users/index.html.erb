@@ -1,0 +1,81 @@
+<div class="container px-5 px-sm-0">
+ <div class="row">
+   <div class="col-md-3">
+
+
+<h1>User info</h1>
+<div>
+  <%= image_tag @user.get_profile_image(100,100) %>
+  <table class="table">
+   <tr><th>name</th> <td><%=@user.name %></td></tr>
+   <tr><th>introduction</th> <td><%=@user.introduce %></td></tr>
+  </table>
+  <%= link_to edit_user_path(@user.id),class:"btn btn-outline-secondary w-100" do %>
+     <i class="fas fa-user-cog"></i>
+  <% end %>
+
+</div>
+
+
+
+<h1>New book</h1>
+<!-- form_with部分 -->
+<%= form_with model: Book.new do |f| %>
+  <h4>Title</h4>
+  <%= f.text_field :title %>
+	
+  <h4>Opinion</h4>
+  <%= f.text_area :body %>
+	
+  <%= f.submit 'Create Book' %>
+<% end %>
+
+</div>
+
+
+<div class="col-md-8 offset-md-1"> 
+<h1>Users</h1>
+
+
+
+ <table class="table">
+  <thead>
+   <tr>
+     <th>image</th>
+     <th>name</th>
+     <th colspan="3"></th>
+   </tr>
+　</thead>
+　
+  <tbody>
+   <% @users.each do |user| %>
+  <tr>
+   <td>
+    <%= link_to user_path(@user.id)  do %>
+     <%= image_tag @user.get_profile_image(100,100) %>
+    <% end %>
+   </td>
+   <th>
+    <span><%= user.name %></span> <!--27行目の変数のuserを使っている-->
+   </th>
+   <td>
+    <p><%= link_to "Show",user_path(user.id) %></p> <!--27行目の変数のuserを使っている-->
+   </td>
+  </tr>
+    <% end %>
+  </tbody>
+ </table>
+</div>
+  
+ </div>
+</div>
+
+<footer>
+  <div class="container mt-5">
+   <div class="row">
+     <div class="mx-auto">
+       <p>CopyRight Infratop.inc</p>
+     </div>
+   </div>
+  </div>
+</footer>
