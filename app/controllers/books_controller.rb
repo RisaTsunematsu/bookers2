@@ -1,6 +1,6 @@
 class BooksController < ApplicationController
   
-  before_action :current_user, only: [ :edit, :update]
+  before_action :correct_user, only: [ :edit, :update]
     
   def new
     @book = Book.new
@@ -31,21 +31,22 @@ class BooksController < ApplicationController
   
   def show
     @book = Book.find(params[:id])
-    @user = current_user
+    @user = @book.user
   end
   
   def edit
+    @book=Book.new
     @book = Book.find(params[:id])
-    @book = Book.new
+    
     
   end
   
   def update
-    book = Book.find(params[:id])
+    @book = Book.find(params[:id])
      
-     if book.update(book_params)
+     if @book.update(book_params)
        flash[:notice] = "You have updated book successfully.."
-       redirect_to book_path(book.id)
+       redirect_to book_path(@book.id)
      else
         @books = Book.all
         render :edit
@@ -65,9 +66,12 @@ class BooksController < ApplicationController
     params.require(:book).permit(:title, :body, :user_id)
   end
   
-  def correct_user
+  def correct_user #変数名と同じでなんでも良い
     @book = Book.find(params[:id])
     @user = @book.user
-    redirect_to(books_path) unless @user == current_user
+  redirect_to(books_path) unless @user == current_user #unless ==なら実行しない
+    #if @user != current_user
+       #redirect_to(books_path)
+    #end
   end
 end
